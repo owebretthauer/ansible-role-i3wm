@@ -3,7 +3,6 @@ __i3_packages:
   - i3
   - rxvt-unicode
   - rofi
-  - dmenu
   - compton
   - feh
   - tmux

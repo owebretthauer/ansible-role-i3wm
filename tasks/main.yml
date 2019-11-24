@@ -4,7 +4,6 @@
 
 # ensure i3 packages are installed.
 - include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
 
 # create i3 config file
 - name: create i3 config folder
@@ -13,36 +12,19 @@
     state: directory
     mode: 0755
 
-- name: register i3 config file
-  action: stat path="~/.config/i3/config"
-  register: "config_file"
+- name: create i3 config file
+  template:
+    src: config.j2
+    dest: ~/.config/i3/config
 
-- name: backup i3 config file
-  block:
+- name: check i3 config file
+  command: i3 -C
+  register: check_config_response
+  failed_when: check_config_response.stdout.find('ERROR') != -1
 
-    - name: backup i3 config file if exists
-      copy:
-        src: ~/.config/i3/config
-        dest: ~/.config/i3/config.bak
-        remote_src: true
-      when: config_file.stat.exists
-    - name: create i3 config file
-      template:
-        src: config.j2
-        dest: ~/.config/i3/config
-    - name: check i3 config file
-      command: i3 -C
-      register: check_config_response
-      failed_when: check_config_response.stdout.find('ERROR') != -1
-  rescue:
 
-    - name: register backup i3 config file
-      action: stat path="~/.config/i3/config.bak"
-      register: "config_file_backup"
-
-    - name: restore backup file
-      copy:
-        src: ~/.config/i3/config.bak
-        dest: ~/.config/i3/config
-        remote_src: true
-      when: config_file_backup.stat.exists
+- name: vim - copy bin src folder
+  copy:
+    src: "{{ role_path }}/files/i3blocks/"
+    dest: "~/.config/i3blocks"
+    mode: 0755

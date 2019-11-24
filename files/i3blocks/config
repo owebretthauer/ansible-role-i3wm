@@ -1,0 +1,11 @@
+command=~/.config/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=pango
+
+[volume]
+interval=once
+signal=10
+
+[clock]
+label=📅
+interval=30

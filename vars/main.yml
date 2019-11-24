@@ -1,4 +1,5 @@
 ---
+__i3_desktop_env.background: "~/.config/wall.png"
 __i3_workspaces:
   - workspace:
     id: 1

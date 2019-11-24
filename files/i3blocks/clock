@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+date
+
+case $BLOCK_BUTTON in
+	2) /usr/bin/xdg-open https://calendar.google.com ;;
+esac

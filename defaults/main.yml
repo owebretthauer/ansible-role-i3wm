@@ -1,4 +1,8 @@
 ---
+
+i3_desktop_env.background: "{{ __i3_desktop_env.background }}"
+i3_terminal: "st"
+
 i3_keybindings_extra: []
 #  - keybinding:
 #    name: example
